@@ -71,8 +71,8 @@ RevitAPIUI), with zero warnings and zero errors. A temporary build target in
 project files. Build command after package restore:
 
 ```powershell
-$env:DOTNET_CLI_HOME = 'G:/dev/revit-ifc/Intermediate/dotnet-home'
-dotnet build Source/Revit.IFC.Export/Revit.IFC.Export.csproj --no-restore -p:SolutionDir=G:/dev/revit-ifc/ -p:Configuration=Release -p:Platform=x64 -p:CustomAfterMicrosoftCommonTargets=G:/dev/revit-ifc/Intermediate/RevitApi.targets -v:minimal
+$env:DOTNET_CLI_HOME = Join-Path (Get-Location).Path 'artifacts/dotnet-home'
+dotnet build Revit.IFC.Export.slnf --configuration Release -p:Platform=x64
 ```
 
 Build log: `Intermediate/LoadBearing-build.log`. Actual Revit model export remains

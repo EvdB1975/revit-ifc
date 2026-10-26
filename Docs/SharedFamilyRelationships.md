@@ -1,6 +1,6 @@
 # Shared nested family investigation and Agent 3 handoff
 
-Repository: `EvdB1975/revit-ifc`. Work branch: `shared-family-fix`.
+Upstream repository: `Autodesk/revit-ifc`. Work branch: `shared-family-fix`.
 Baseline: `IFC_v25.4.4`, commit `cae082eca1e6702f7b7deb7039fee849292ae5bd`.
 The branch started exactly at this baseline. No other branch was checked out or changed.
 
@@ -220,12 +220,12 @@ Local build override (`artifacts/RevitApi.targets`):
 </Project>
 ```
 
-Build from the repository root in PowerShell (adjust absolute paths if needed):
+Build from the repository root in PowerShell using the shared API reference fallback:
 
 ```powershell
-$env:DOTNET_CLI_HOME = 'G:\dev\revit-ifc\artifacts\dotnet-home'
+$env:DOTNET_CLI_HOME = Join-Path (Get-Location).Path 'artifacts/dotnet-home'
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
-dotnet build Source/Revit.IFC.Export/Revit.IFC.Export.csproj --configuration Release -p:Platform=x64 '-p:SolutionDir=G:\dev\revit-ifc\' -p:CustomAfterMicrosoftCommonTargets=G:\dev\revit-ifc\artifacts\RevitApi.targets -p:BaseOutputPath=G:\dev\revit-ifc\artifacts\build\
+dotnet build Revit.IFC.Export.slnf --configuration Release -p:Platform=x64
 dotnet run --project Tests/SharedFamilyRelationships/SharedFamilyRelationships.csproj --configuration Release
 ```
 
