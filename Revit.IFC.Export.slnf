@@ -1,0 +1,9 @@
+{
+  "solution": {
+    "path": "Revit.IFC.sln",
+    "projects": [
+      "Source\\Revit.IFC.Common\\Revit.IFC.Common.csproj",
+      "Source\\Revit.IFC.Export\\Revit.IFC.Export.csproj"
+    ]
+  }
+}
