@@ -65,6 +65,10 @@ namespace Revit.IFC.Export.Exporter.PropertySet.Calculators
          if (wall != null)
          {
             m_LoadBearing = wall.StructuralUsage == StructuralWallUsage.Bearing;
+            // Structural walls may have a usage other than Bearing (e.g. Shear or Combined).
+            Parameter structural = wall.get_Parameter(BuiltInParameter.WALL_STRUCTURAL_SIGNIFICANT);
+            if (structural != null && structural.HasValue && structural.StorageType == StorageType.Integer)
+               m_LoadBearing |= structural.AsInteger() != 0;
             return true;
          }
 
