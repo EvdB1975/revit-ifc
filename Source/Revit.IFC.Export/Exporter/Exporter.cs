@@ -1819,6 +1819,8 @@ namespace Revit.IFC.Export.Exporter
                }
             }
 
+            SharedFamilyInstanceExporter.RelateSharedComponents(exporterIFC, document);
+
             // Relate levels and products.  This may create new orphaned elements, so deal with those next.
             RelateLevels(exporterIFC, document);
 

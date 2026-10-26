@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Source/Revit.IFC.Export/Exporter/SharedFamilyInstanceExporter.cs" Link="SharedFamilyInstanceExporter.cs" />
+    <Compile Include="../../Source/Revit.IFC.Export/Utility/HandleToElementCache.cs" Link="HandleToElementCache.cs" />
+  </ItemGroup>
+</Project>
