@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -83,7 +83,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Source\Revit.IFC.Import.Core\Revit.IFC.Import.Core.csproj">
       <Name>Revit.IFC.Import.Core</Name>
-      <Project>{C0B3C0DC-58EE-4876-9ACD-A0A8C82E92B4}</Project>
+      <Project>{B1E159B7-4B12-45A9-B83F-159E37798D44}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>

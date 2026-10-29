@@ -1819,6 +1819,8 @@ namespace Revit.IFC.Export.Exporter
                }
             }
 
+            SharedFamilyInstanceExporter.RelateSharedComponents(exporterIFC, document);
+
             // Relate levels and products.  This may create new orphaned elements, so deal with those next.
             RelateLevels(exporterIFC, document);
 
@@ -1829,6 +1831,7 @@ namespace Revit.IFC.Export.Exporter
             // create an association between the IfcBuilding and building elements with no other containment.
             HashSet<IFCAnyHandle> buildingElements = RemoveContainedHandlesFromSet(ExporterCacheManager.LevelInfoCache.OrphanedElements);
             buildingElements.UnionWith(exporterIFC.GetRelatedElements());
+            buildingElements.ExceptWith(ExporterCacheManager.SharedFamilyComponentsCache);
             if (buildingElements.Count > 0)
             {
                HashSet<IFCAnyHandle> relatedElementSetForSite = new HashSet<IFCAnyHandle>();
@@ -3451,7 +3454,8 @@ namespace Revit.IFC.Export.Exporter
 
       private static bool ValidateContainedHandle(IFCAnyHandle initialHandle)
       {
-         if (ExporterCacheManager.ElementsInAssembliesCache.Contains(initialHandle))
+         if (ExporterCacheManager.ElementsInAssembliesCache.Contains(initialHandle) ||
+             ExporterCacheManager.SharedFamilyComponentsCache.Contains(initialHandle))
             return false;
 
          try

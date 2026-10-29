@@ -99,7 +99,7 @@
   <Import Project=".\IFCExporterUI.props" />
   <PropertyGroup>
     <PostBuildEvent>
-$(ProjectDir)CreateAddinFile.bat $(OutDir)$(TargetName).addin $(AssemblyName).dll $(AddinGUID)
+call "$(ProjectDir)CreateAddinFile.bat" "$(TargetDir)$(TargetName).addin" $(AssemblyName).dll $(AddinGUID)
 </PostBuildEvent>
     <BaseOutputPath>C:\ProgramData\Autodesk\ApplicationPlugins\IFC 2025.bundle\Contents\2025</BaseOutputPath>
   </PropertyGroup>

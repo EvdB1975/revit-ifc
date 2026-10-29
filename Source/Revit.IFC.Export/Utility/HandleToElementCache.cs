@@ -56,6 +56,14 @@ namespace Revit.IFC.Export.Utility
       }
 
       /// <summary>
+      /// Returns a snapshot of all registered handles, including multiple occurrences for one element.
+      /// </summary>
+      public ICollection<IFCAnyHandle> GetHandles()
+      {
+         return HandleToElement.Keys.ToList();
+      }
+
+      /// <summary>
       /// Adds the handle to the dictionary.
       /// </summary>
       /// <param name="handle">The handle.</param>

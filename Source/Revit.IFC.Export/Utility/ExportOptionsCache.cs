@@ -405,6 +405,8 @@ namespace Revit.IFC.Export.Utility
          cache.ExportCeilingGrids = OptionsUtil.GetNamedBooleanOption(options, "ExportCeilingGrids").GetValueOrDefault(false);
 
          // "ExportSeparateParts" override
+         cache.ExportSharedFamilyComponentsAsAggregates = OptionsUtil.GetNamedBooleanOption(
+            options, "ExportSharedFamilyComponentsAsAggregates").GetValueOrDefault(true);
          cache.ExportPartsAsBuildingElementsOverride = OptionsUtil.GetNamedBooleanOption(options, "ExportPartsAsBuildingElements");
 
          // "ExportBoundingBox" override
@@ -919,6 +921,9 @@ namespace Revit.IFC.Export.Utility
          get;
          set;
       }
+
+      /// <summary>Whether to group shared nested family components under their exported parent.</summary>
+      public bool ExportSharedFamilyComponentsAsAggregates { get; private set; } = true;
 
       /// <summary>
       /// Cache variable for the ExportPartsAsBuildingElements override (if set independently via the UI)

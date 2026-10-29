@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <RevitApiDirectory Condition="'$(RevitApiDirectory)' == ''">$(ProgramW6432)\Autodesk\Revit 2025</RevitApiDirectory>
+  </PropertyGroup>
+  <!-- Run after all project references have been evaluated, including design-time builds.
+       Keep existing SDK layouts working and fall back only for missing HintPaths. -->
+  <Target Name="ResolveInstalledRevitApiReferences" BeforeTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+      <Reference Update="RevitAPI;RevitAPIIFC;RevitAPIUI;Autodesk.UI.Windows;Autodesk.Weave.Wpf;UserInterfaceUtility"
+                 Condition="!Exists('%(Reference.HintPath)') And Exists('$(RevitApiDirectory)\%(Reference.Identity).dll')">
+        <HintPath>$(RevitApiDirectory)\%(Reference.Identity).dll</HintPath>
+      </Reference>
+    </ItemGroup>
+  </Target>
+</Project>

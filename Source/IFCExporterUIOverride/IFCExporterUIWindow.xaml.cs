@@ -414,6 +414,7 @@ namespace BIM.IFC.Export.UI
          checkBoxUse2DRoomVolumes.IsChecked = configuration.Use2DRoomBoundaryForVolume;
          checkBoxFamilyAndTypeName.IsChecked = configuration.UseFamilyAndTypeNameForReference;
          checkBoxExportPartsAsBuildingElements.IsChecked = configuration.ExportPartsAsBuildingElements;
+         checkboxSharedFamilyComponents.IsChecked = configuration.ExportSharedFamilyComponentsAsAggregates;
          checkBoxUseActiveViewGeometry.IsChecked = configuration.UseActiveViewGeometry;
          checkboxExportBoundingBox.IsChecked = configuration.ExportBoundingBox;
          checkboxExportSolidModelRep.IsChecked = configuration.ExportSolidModelRep;
@@ -470,6 +471,7 @@ namespace BIM.IFC.Export.UI
                                                                 checkboxIFCCommonPropertySets,
                                                                 checkboxVisibleElementsCurrView,
                                                                 checkBoxExportPartsAsBuildingElements,
+                                                                checkboxSharedFamilyComponents,
                                                                 checkBoxUse2DRoomVolumes,
                                                                 checkBoxFamilyAndTypeName,
                                                                 checkboxExportBoundingBox,
@@ -1387,6 +1389,13 @@ namespace BIM.IFC.Export.UI
          {
             configuration.ExportSchedulesAsPsets = GetCheckbuttonChecked(checkBox);
          }
+      }
+
+      private void checkboxSharedFamilyComponents_Checked(object sender, RoutedEventArgs e)
+      {
+         IFCExportConfiguration configuration = GetSelectedConfiguration();
+         if (configuration != null)
+            configuration.ExportSharedFamilyComponentsAsAggregates = GetCheckbuttonChecked((CheckBox)sender);
       }
 
       /// <summary>
