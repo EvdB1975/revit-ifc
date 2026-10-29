@@ -1220,4 +1220,7 @@
   <data name="UseTypePropertiesInInstacePSets" xml:space="preserve">
     <value>Allow use of type properties in instance property sets</value>
   </data>
+  <data name="ExportSharedFamilyComponentsAsAggregates" xml:space="preserve">
+    <value>Group shared nested family components under their parent</value>
+  </data>
 </root>

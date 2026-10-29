@@ -21,6 +21,9 @@ namespace Revit.IFC.Export.Exporter
       /// </summary>
       internal static void RelateSharedComponents(ExporterIFC exporterIFC, Document document)
       {
+         if (!ExporterCacheManager.ExportOptionsCache.ExportSharedFamilyComponentsAsAggregates)
+            return;
+
          // ElementToHandleCache keeps only the first handle.  Use the reverse cache so that a
          // split parent is not silently represented by its first storey occurrence.
          Dictionary<ElementId, HashSet<IFCAnyHandle>> familyHandles = new();
@@ -71,6 +74,7 @@ namespace Revit.IFC.Export.Exporter
             foreach (IFCAnyHandle childHandle in entry.Value)
             {
                if (childHandle == parentHandle || pendingParts.Contains(childHandle) ||
+                  ExporterCacheManager.SharedFamilyComponentsCache.Contains(childHandle) ||
                   ExporterCacheManager.ElementsInAssembliesCache.Contains(childHandle) ||
                   IFCAnyHandleUtil.HasRelDecomposes(childHandle) ||
                   IFCAnyHandleUtil.GetAggregateInstanceAttribute<HashSet<IFCAnyHandle>>(
@@ -89,8 +93,9 @@ namespace Revit.IFC.Export.Exporter
          foreach (KeyValuePair<IFCAnyHandle, HashSet<IFCAnyHandle>> relation in relations)
          {
             ExporterUtil.RelateObjects(exporterIFC, null, relation.Key, relation.Value);
-            // Level/orphan containment already filters HasRelDecomposes.  Room containment
-            // is emitted separately and must also defer to the new whole/part relationship.
+            // Native inverse attributes may not reflect a newly created aggregation yet.
+            // Track the parts explicitly so spatial containment does not also list them.
+            ExporterCacheManager.SharedFamilyComponentsCache.UnionWith(relation.Value);
             foreach (SpaceInfo space in ExporterCacheManager.SpaceInfoCache.SpaceInfos.Values)
                space.RelatedElements.ExceptWith(relation.Value);
          }

@@ -174,6 +174,9 @@ namespace Revit.IFC.Export.Utility
       /// </summary>
       public static HashSet<IFCAnyHandle> ElementsInAssembliesCache { get; private set; } = new();
 
+      /// <summary>Shared family components contained through their aggregate parent.</summary>
+      public static HashSet<IFCAnyHandle> SharedFamilyComponentsCache { get; private set; } = new();
+
       /// <summary>
       /// The ElementToHandleCache object, used to cache Revit element ids to IFC entity handles.
       /// </summary>
@@ -792,6 +795,7 @@ namespace Revit.IFC.Export.Utility
          m_DocumentUnits = null;
          DummyHostCache.Clear();
          ElementsInAssembliesCache.Clear();
+         SharedFamilyComponentsCache.Clear();
          ElementIdMaterialParameterCache.Clear();
          ElementToHandleCache.Clear();
          ElementTypeToHandleCache.Clear();

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: AssemblyCulture("")]
 
 [assembly: AssemblyVersion("25.4.4.0")]
-[assembly: AssemblyFileVersion("25.4.4.0")]
+[assembly: AssemblyFileVersion("25.4.6.1027")]
 
 
 // Version information can now be found in Source\Foundation\RevitENU\Version.cs

@@ -68,33 +68,46 @@ namespace Revit.IFC.Export.Utility
    public class ContainmentCache { public Dictionary<IFCAnyHandle, HashSet<IFCAnyHandle>> Cache = new(); }
    public class SpaceInfo { public HashSet<IFCAnyHandle> RelatedElements = new(); }
    public class SpaceInfoCache { public Dictionary<ElementId, SpaceInfo> SpaceInfos = new(); }
+   public class ExportOptionsCache
+   {
+      public bool ExportSharedFamilyComponentsAsAggregates { get; set; } = true;
+   }
    public static class ExporterCacheManager
    {
+      public static ExportOptionsCache ExportOptionsCache = new();
       public static HandleToElementCache HandleToElementCache = new();
       public static ElementToHandleCache ElementToHandleCache = new();
       public static HashSet<IFCAnyHandle> HandleToDeleteCache = new();
       public static HashSet<IFCAnyHandle> ElementsInAssembliesCache = new();
+      public static HashSet<IFCAnyHandle> SharedFamilyComponentsCache = new();
       public static ContainmentCache ContainmentCache = new();
       public static SpaceInfoCache SpaceInfoCache = new();
       public static void Reset()
       {
+         ExportOptionsCache = new();
          HandleToElementCache.Clear();
          HandleToDeleteCache.Clear();
          ElementsInAssembliesCache.Clear();
+         SharedFamilyComponentsCache.Clear();
          ContainmentCache.Cache.Clear();
          SpaceInfoCache.SpaceInfos.Clear();
          ExporterUtil.Relations.Clear();
+         ExporterUtil.UpdateInverseAttributes = true;
       }
    }
    public static class ExporterUtil
    {
+      public static bool UpdateInverseAttributes = true;
       public static List<(IFCAnyHandle Parent, HashSet<IFCAnyHandle> Children)> Relations = new();
       public static void RelateObjects(ExporterIFC exporter, string guid, IFCAnyHandle parent,
          ICollection<IFCAnyHandle> children)
       {
          Relations.Add((parent, new(children)));
-         foreach (var child in children) child.HasParent = true;
-         parent.Decomposition.Add(new IFCAnyHandle());
+         if (UpdateInverseAttributes)
+         {
+            foreach (var child in children) child.HasParent = true;
+            parent.Decomposition.Add(new IFCAnyHandle());
+         }
       }
    }
 }

@@ -29,6 +29,17 @@ Test("child exported before parent; siblings grouped; room containment removed; 
    f.Run();
    Check(ExporterUtil.Relations.Count == 1, "duplicate relationship");
 });
+Test("disabled option preserves independent components and room containment", f =>
+{
+   ExporterCacheManager.ExportOptionsCache.ExportSharedFamilyComponentsAsAggregates = false;
+   var room = new SpaceInfo();
+   room.RelatedElements.UnionWith(new[] { f.ChildHandle, f.ParentHandle });
+   ExporterCacheManager.SpaceInfoCache.SpaceInfos[new(10)] = room;
+   f.Run();
+   Check(ExporterUtil.Relations.Count == 0, "disabled option created relationships");
+   Check(ExporterCacheManager.SharedFamilyComponentsCache.Count == 0, "disabled option excluded components");
+   Check(room.RelatedElements.SetEquals(new[] { f.ChildHandle, f.ParentHandle }), "disabled option changed room containment");
+});
 Test("parent exported before child", f =>
 {
    ExporterCacheManager.HandleToElementCache.Clear();
@@ -36,6 +47,20 @@ Test("parent exported before child", f =>
    ExporterCacheManager.HandleToElementCache.Register(f.ChildHandle, f.Child.Id);
    f.Run();
    Check(ExporterUtil.Relations.Single().Parent == f.ParentHandle, "order dependence");
+});
+Test("parts tracked without native inverse updates; repeat safe; parent retained", f =>
+{
+   ExporterUtil.UpdateInverseAttributes = false;
+   var sibling = f.Add(3, f.Parent);
+   f.Run();
+   Check(!f.ChildHandle.HasParent, "test unexpectedly populated native inverse");
+   Check(ExporterCacheManager.SharedFamilyComponentsCache.SetEquals(new[] { f.ChildHandle, sibling }),
+      "spatial containment must exclude exactly the aggregated children");
+   Check(!ExporterCacheManager.SharedFamilyComponentsCache.Contains(f.ParentHandle), "parent excluded from containment");
+   f.Run();
+   Check(ExporterUtil.Relations.Count == 1, "duplicate relationship without inverse updates");
+   ExporterCacheManager.Reset();
+   Check(ExporterCacheManager.SharedFamilyComponentsCache.Count == 0, "stale components across documents");
 });
 Test("three levels retain immediate parents", f =>
 {

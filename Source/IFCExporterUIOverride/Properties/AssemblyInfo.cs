@@ -68,5 +68,5 @@ using System.Windows;
 // The number will show up in the Title bar of the export dialog as well as at the IFC header file
 // This number must be manually updated prior to releasing the new version
 [assembly: AssemblyVersion("25.4.4.0")]
-[assembly: AssemblyFileVersion("25.4.4.0")]
+[assembly: AssemblyFileVersion("25.4.6.1027")]
 #endif

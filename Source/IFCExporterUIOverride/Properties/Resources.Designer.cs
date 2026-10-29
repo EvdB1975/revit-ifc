@@ -1008,6 +1008,10 @@ namespace BIM.IFC.Export.UI.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Export parts as building elements.
         /// </summary>
+        public static string ExportSharedFamilyComponentsAsAggregates {
+            get { return ResourceManager.GetString("ExportSharedFamilyComponentsAsAggregates", resourceCulture); }
+        }
+
         public static string ExportPartsAsBuildingElements {
             get {
                 return ResourceManager.GetString("ExportPartsAsBuildingElements", resourceCulture);

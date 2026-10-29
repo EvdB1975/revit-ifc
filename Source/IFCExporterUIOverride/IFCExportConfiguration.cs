@@ -288,6 +288,9 @@ namespace BIM.IFC.Export.UI
       /// </summary>
       public bool ExportPartsAsBuildingElements { get; set; } = false;
 
+      /// <summary>Group exported shared nested family components under their immediate parent.</summary>
+      public bool ExportSharedFamilyComponentsAsAggregates { get; set; } = true;
+
       /// <summary>
       /// True to allow exports of solid models when possible.
       /// False to exclude them.
